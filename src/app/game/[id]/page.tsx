@@ -4,6 +4,48 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import { Label } from "./components/label";
 import { GameCard } from "@/components/GameCard";
+import { Metadata } from "next";
+
+interface PropsParams {
+    params: {
+        id: string
+    }
+}
+
+export async function generateMetadata({ params }: PropsParams): Promise<Metadata> {
+    try {
+        const res: GameProps = await fetch(`${process.env.NEXT_API_URL}/next-api/?api=game&id=${params.id}`, { cache: "no-store" })
+            .then(res => res.json())
+            .catch(() => {
+                return {
+                    title: "DalyGames - descubra jogos incríveis para se divertir"
+                }
+            })
+
+        return {
+            title: res.title,
+            description: `${res.description.slice(0, 100)}...`,
+            openGraph: {
+                title: res.title,
+                images: [res.image_url]
+            },
+            robots: {
+                index: true,
+                follow: true,
+                nocache: true,
+                googleBot: {
+                    index: true,
+                    follow: true,
+                    noimageindex: true
+                }
+            }
+        }
+    } catch (error) {
+        return {
+            title: "DalyGames - descubra jogos incríveis para se divertir"
+        }
+    }
+}
 
 async function getGameData(id: string) {
     try {
@@ -24,6 +66,7 @@ async function getSortedGame() {
         throw new Error("Failed to fetch data");
     }
 }
+
 export default async function Game({ params: { id } }: { params: { id: string } }) {
     const data: GameProps = await getGameData(id)
     const sortedGame: GameProps = await getSortedGame()
