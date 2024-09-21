@@ -17,10 +17,7 @@ export const Header = () => {
                             className="w-full"
                         />
                     </Link>
-                    <Link href="/" >
-                        Games
-                    </Link>
-                    <Link href="/" >
+                    <Link href="/profile" >
                         Perfil
                     </Link>
                 </nav>
