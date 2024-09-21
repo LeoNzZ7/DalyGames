@@ -42,7 +42,7 @@ npm run dev
 
 ## Demonstração
 
-![dalygamesgif](https://github.com/LeoNzZ7/DalyGames/blob/main/dalygames.gif)
+![dalygamesgif](https://github.com/LeoNzZ7/DalyGames/blob/master/dalygames.gif)
 
 ## Variáveis de Ambiente
 
